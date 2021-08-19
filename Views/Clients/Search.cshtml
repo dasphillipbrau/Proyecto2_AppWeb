@@ -1,0 +1,87 @@
+﻿@model Proyecto2_AppWeb.Models.Client
+@{
+    ViewBag.Title = "El Polo Norte";
+    ViewBag.Message = "Buscar Clientes";
+}
+
+<h1 class="store-title">@ViewBag.Title</h1>
+<h2 class="page-title">@ViewBag.Message</h2>
+
+@using (Html.BeginForm("Search", "Clients", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    <div class="form-group">
+        <div class="form-inline">
+            <p>Cédula: @Html.TextBox("SearchId")</p>
+            <input type="submit" value="Buscar" class="btn btn-success" />
+        </div>
+        @if (TempData["IdNotExists"] != null)
+        {
+            <p class="text-danger">Cédula buscada no existe.</p>
+        }
+        @if (TempData["StringEmpty"] != null)
+        {
+            <p class="text-danger">Cédula en blanco.</p>
+        }
+    </div>
+}
+@using (Html.BeginForm("Edit", "Clients", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+    @Html.AntiForgeryToken()
+    if (TempData["ResultFound"] != null)
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Id, new { @class = "control-label" })
+            @Html.DisplayFor(m => m.Id, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.Id)
+
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.FullName, new { @class = "control-label" })
+            @Html.EditorFor(m => m.FullName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.FullName, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.PhoneNumber, new { @class = "control-label" })
+            @Html.EditorFor(m => m.PhoneNumber, new { @class = "form-control", placeholder = "####-####" })
+            @Html.ValidationMessageFor(m => m.PhoneNumber, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+
+            @Html.LabelFor(m => m.Discount, new { @class = "control-label" })
+            @Html.EditorFor(m => m.Discount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Discount, null, new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.RecentPurchasesAmount, new { @class = "control-label" })
+            @Html.DisplayFor(m => m.RecentPurchasesAmount, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.RecentPurchasesAmount)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.LastYearPurchases, new { @class = "control-label" })
+            @Html.DisplayFor(m => m.LastYearPurchases, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.LastYearPurchases)
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.AcUnitsPurchased, new { @class = "control-label" })
+            @Html.DisplayFor(m => m.AcUnitsPurchased, new { @class = "form-control" })
+            @Html.HiddenFor(m => m.AcUnitsPurchased)
+        </div>
+
+
+        <input type="submit" class="btn btn-primary" value="Guardar Cambios" />
+    }
+
+    if (TempData["SuccessfulUpdate"] != null)
+    {
+        <p class="text-success">Cliente actualizado</p>
+    }
+
+    if(TempData["NoUpdate"] != null)
+                {
+                    <p class="text-danger">Cliente no actualizado. Revise los campos e intente de nuevo.</p>
+                }
+}
+
+
+
+

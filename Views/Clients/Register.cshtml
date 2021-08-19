@@ -1,0 +1,81 @@
+﻿@model Proyecto2_AppWeb.Models.Client
+
+@{
+    ViewBag.Title = "El Polo Norte";
+    ViewBag.Message = "Registro de Clientes";
+
+}
+
+<h1 class="store-title">@ViewBag.Title</h1>
+<h2 class="page-title">@ViewBag.Message</h2>
+@using (Html.BeginForm("Register", "Clients", FormMethod.Post, new { @class = "form-horizontal" }))
+{
+
+    @Html.AntiForgeryToken();
+
+    <div class="form-group">
+            <label for="inp_registryId" class="control-label">Cédula</label>
+            @if (TempData["IdExists"] != null)
+            {
+                <p class="text-danger">La cédula indicada ya existe.</p>
+            }
+        @Html.EditorFor(model => model.Id, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.Id, null, new { @class = "text-danger" })
+    </div>
+    <div class="form-group">
+        <label class="control-label" f or="inp_registryFullName">Nombre Completo</label>
+        @Html.EditorFor(model => model.FullName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.FullName, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" for="inp_registryTelephone">Teléfono</label>
+        @Html.EditorFor(model => model.PhoneNumber, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.PhoneNumber, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <div class="form-inline">
+            @Html.LabelFor(model => model.Discount, new { @class = "control-label" })
+            @Html.EditorFor(model => model.Discount, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Discount, null, new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="inp_registryRecentPurchases" class="control-label">Monto de Compras Recientes</label>
+        @Html.EditorFor(model => model.RecentPurchasesAmount, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.RecentPurchasesAmount, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" for="inp_registryLastYearPurchases">Monto de Compras del Año Pasado</label>
+        @Html.EditorFor(model => model.LastYearPurchases, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.LastYearPurchases, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <label class="control-label" for="inp_registryAcUnitsPurchased">Unidades de A/C compradas</label>
+        @Html.EditorFor(model => model.AcUnitsPurchased, new { @class = "form-control" })
+        @Html.ValidationMessageFor(model => model.AcUnitsPurchased, null, new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-primary" id="btnRegister">Registrar</button>
+    </div>
+
+    <div class="form-group">
+        @if (TempData["RecordInserted"] != null)
+        {
+            <p class="alert alert-success">@TempData["RecordInserted"]</p>
+        }
+        @if (TempData["NotInserted"] != null)
+        {
+            <p class="alert alert-danger">No se ha insertado el cliente. Revise los datos e intente de nuevo.</p>
+        }
+    </div>
+
+}
+
+
+

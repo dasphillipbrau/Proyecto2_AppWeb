@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Proyecto2_AppWeb.Models.Client>
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Bienvenido a El Polo Norte</h2>
+<p>Desde esta página podrá consultar todos los clientes registrados</p>
+
+<p class="text-info">Utilice la barra de acciones en la parte superior de la pantalla para navegar el sitio</p>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Cédula</th>
+                <th scope="col">Nombre Completo</th>
+                <th scope="col">Número de Teléfono</th>
+                <th scope="col">Aplica para descuento</th>
+                <th scope="col">Monto gastado en el mes anterior</th>
+                <th scope="col">Monto gastado en el año anterior</th>
+                <th scope="col">Unidades de A/C Compradas</th>
+            </tr>
+        </thead>
+        @foreach (var client in Model)
+        {
+        <tbody>
+            <tr>
+                <th scope="row">@client.Id</th>
+                <td>@client.FullName</td>
+                <td>@client.PhoneNumber</td>
+                <td>@if(client.Discount){ <p>Sí</p>} else { <p>No</p>}</td>
+                <td>@client.RecentPurchasesAmount</td>
+                <td>@client.LastYearPurchases</td>
+                <td>@client.AcUnitsPurchased</td>
+            </tr>
+        </tbody>
+        }
+    </table>
+} else
+            {
+                <p class="text-danger">No hay clientes registrados.</p>
+            }
+
+

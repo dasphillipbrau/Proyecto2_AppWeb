@@ -1,0 +1,47 @@
+﻿@model IEnumerable<Proyecto2_AppWeb.Models.Prospect>
+@{
+    ViewBag.Title = "El Polo Norte";
+    ViewBag.Message = "Posibles prospectos";
+
+}
+
+<h1 class="store-title">@ViewBag.Title</h1>
+<h2 class="page-title">@ViewBag.Message</h2>
+
+@using (Html.BeginForm())
+{
+    if (TempData["ResultFound"] != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Cédula</th>
+                    <th scope="col">Tipo de Cliente</th>
+                    <th scope="col">Nombre Completo</th>
+                    <th scope="col">Unidades Compradas</th>
+                    <th scope="col">Monto total en el mes anterior</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var client in Model)
+                {
+                    <tr>
+                        <th scope="row">@client.Id</th>
+                        <td>@client.ClientType</td>
+                        <td>@client.FullName</td>
+                        <td>@client.AcUnitsPurchased</td>
+                        <td>@client.RecentPurchasesAmount</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    }
+    else
+    {
+        if (Session["ResultFound"] == null)
+        {
+            <p class="text-danger">No se encuentran prospectos.</p>
+        }
+    }
+}
